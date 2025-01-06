@@ -1,4 +1,5 @@
 class Author < ApplicationRecord
+  has_many :posts
 
   validates :name, presence: { message: "Este campo é obrigatório." },
             length: { minimum: 1, maximum: 100, message: "O tamanho do nome deve ser entre 1 e 100 caracteres." },
