@@ -1,8 +1,7 @@
 class Api::V1::AuthorController < ApplicationController
 
   def index
-    @authors = Author.all
-    render json: @authors
+    render json: Author.all
   end
 
   def show
@@ -10,7 +9,7 @@ class Api::V1::AuthorController < ApplicationController
   end
 
   def create
-    author = Author.new(params.require(:author).permit(:name, :email, :senha))
+    author = Author.new(params.require(:author).permit(:name, :email, :password))
 
     if author.save
       render json: author, status: :created
@@ -26,7 +25,7 @@ class Api::V1::AuthorController < ApplicationController
 
   def update
     author = Author.find(params[:id])
-    if author.update(params.require(:author).permit(:name, :email, :senha))
+    if author.update(params.require(:author).permit(:name, :email, :password))
       render json: author, status: :ok
     else
       render json: { errors: author.errors.full_messages }, status: :unprocessable_entity

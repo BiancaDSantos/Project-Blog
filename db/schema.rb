@@ -10,16 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_05_210953) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_06_014913) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
   create_table "authors", force: :cascade do |t|
     t.string "name", limit: 100, null: false
     t.string "email", limit: 150, null: false
-    t.string "senha", limit: 12, null: false
+    t.string "password", limit: 12, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_authors_on_email", unique: true
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string "name", limit: 60, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 end
