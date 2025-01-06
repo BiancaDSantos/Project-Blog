@@ -5,7 +5,7 @@ class Api::V1::TagController < ApplicationController
   end
 
   def show
-    render json: Tag.find(params[:id])
+    render json: Tag.find_by(params[:id])
   end
 
   def create
@@ -19,12 +19,12 @@ class Api::V1::TagController < ApplicationController
   end
 
   def destroy
-    tag = Tag.find(params[:id])
+    tag = Tag.find_by(params[:id])
     tag.destroy
   end
 
   def update
-    tag = Tag.find(params[:id])
+    tag = Tag.find_by(params[:id])
     if tag.update(params.permit(:name))
       render json: tag, status: :ok
     else

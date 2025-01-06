@@ -5,7 +5,7 @@ class Api::V1::AuthorController < ApplicationController
   end
 
   def show
-    render json: Author.find(params[:id])
+    render json: Author.find_by(params[:id])
   end
 
   def create
@@ -19,12 +19,12 @@ class Api::V1::AuthorController < ApplicationController
   end
 
   def destroy
-    author = Author.find(params[:id])
+    author = Author.find_by(params[:id])
     author.destroy
   end
 
   def update
-    author = Author.find(params[:id])
+    author = Author.find_by(params[:id])
     if author.update(params.permit(:name, :email, :password))
       render json: author, status: :ok
     else

@@ -19,7 +19,7 @@ class Api::V1::PostController < ApplicationController
   end
 
   def show
-    render json: Post.find(params[:id]), include: :post_revisions
+    render json: Post.find_by(id: params[:id]), include: :post_revisions
   end
 
   def create
@@ -49,7 +49,7 @@ class Api::V1::PostController < ApplicationController
   end
 
   def destroy
-    post = Post.find(params[:id])
+    post = Post.find_by(id: params[:id])
     post.destroy
   end
 
