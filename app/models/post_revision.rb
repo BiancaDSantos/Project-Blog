@@ -1,8 +1,6 @@
 class PostRevision < ApplicationRecord
   belongs_to :post
   has_many :tag_posts
-  #has_many :tags, through: :tag_posts
-  #has_many :tags, -> { where(tag_posts: { active: true }) }, through: :tag_posts
   has_many :tags, -> { merge(TagPost.active) }, through: :tag_posts
 
   scope :active, -> { where(active_revision: true) }
