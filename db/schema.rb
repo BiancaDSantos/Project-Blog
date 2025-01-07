@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_06_034608) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_06_153344) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -25,6 +25,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_06_034608) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_authors_on_email", unique: true
+  end
+
+  create_table "comments", force: :cascade do |t|
+    t.bigint "author_id"
+    t.bigint "post_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["author_id"], name: "index_comments_on_author_id"
+    t.index ["post_id"], name: "index_comments_on_post_id"
   end
 
   create_table "post_revisions", force: :cascade do |t|
@@ -47,12 +56,26 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_06_034608) do
     t.index ["status"], name: "index_posts_on_status"
   end
 
+  create_table "tag_posts", force: :cascade do |t|
+    t.bigint "tag_id", null: false
+    t.bigint "post_revision_id", null: false
+    t.boolean "active", default: true, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["post_revision_id"], name: "index_tag_posts_on_post_revision_id"
+    t.index ["tag_id"], name: "index_tag_posts_on_tag_id"
+  end
+
   create_table "tags", force: :cascade do |t|
     t.string "name", limit: 60, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "comments", "authors"
+  add_foreign_key "comments", "posts"
   add_foreign_key "post_revisions", "posts"
   add_foreign_key "posts", "authors"
+  add_foreign_key "tag_posts", "post_revisions"
+  add_foreign_key "tag_posts", "tags"
 end

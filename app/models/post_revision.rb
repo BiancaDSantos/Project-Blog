@@ -1,6 +1,12 @@
 class PostRevision < ApplicationRecord
   belongs_to :post
+  has_many :tag_posts
+  #has_many :tags, through: :tag_posts
+  #has_many :tags, -> { where(tag_posts: { active: true }) }, through: :tag_posts
+  has_many :tags, -> { merge(TagPost.active) }, through: :tag_posts
+
   scope :active, -> { where(active_revision: true) }
-  validates :title, presence: { message: "O campo título deve ser preenchido" }, length: { maximum: 300}
-  validates :content
+
+  validates :title, presence: { message: "O campo título deve ser preenchido" },
+            length: { maximum: 300, message: "O título não pode ter mais de 300 caracteres." }
 end
