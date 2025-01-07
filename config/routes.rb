@@ -6,7 +6,9 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :author
       resources :tag
-      resources :post
+      resources :post do
+        resources :comment
+      end
     end
   end
 

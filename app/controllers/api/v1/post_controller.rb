@@ -123,7 +123,8 @@ class Api::V1::PostController < ApplicationController
       content: active_revision&.content,
       tags: active_revision&.tags&.pluck(:name),
       created_at: post.created_at,
-      updated_at: post.updated_at
+      updated_at: post.updated_at,
+      comments: post.comments&.map { |comment| { id: comment.id, content: comment.content, author: comment.author&.name } }
     }
 
     result[:revisions] = serialize_revisions(post.post_revisions) if include_revisions
